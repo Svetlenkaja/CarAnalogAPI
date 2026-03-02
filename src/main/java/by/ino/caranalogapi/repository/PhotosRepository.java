@@ -1,9 +1,9 @@
 package by.ino.caranalogapi.repository;
 
-import by.ino.caranalogapi.model.LogInfo;
+import by.ino.caranalogapi.model.Photos;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface LogInfoRepository extends JpaRepository<LogInfo, Integer> {
+public interface PhotosRepository extends JpaRepository<Photos, Long> {
 }

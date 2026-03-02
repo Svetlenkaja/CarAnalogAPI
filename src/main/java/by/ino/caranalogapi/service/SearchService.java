@@ -1,9 +1,11 @@
 package by.ino.caranalogapi.service;
 
-import by.ino.caranalogapi.model.Cars;
 
-import java.util.List;
+import by.ino.caranalogapi.aspect.Logging;
+import by.ino.caranalogapi.model.PaginationPage;
+import by.ino.caranalogapi.model.RequestDto;
 
-public interface CarsService {
-    List<Cars> getAll();
+public interface SearchService {
+    @Logging
+    PaginationPage search(RequestDto request);
 }

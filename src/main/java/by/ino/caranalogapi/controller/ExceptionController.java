@@ -1,5 +1,7 @@
 package by.ino.caranalogapi.controller;
 
+import by.ino.caranalogapi.exception.AuthorizeException;
+import by.ino.caranalogapi.exception.NotFoundException;
 import by.ino.caranalogapi.exception.ServiceException;
 import by.ino.caranalogapi.model.ResponseErrorDto;
 import org.springframework.http.HttpStatus;
@@ -11,7 +13,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestControllerAdvice
@@ -28,7 +29,7 @@ public class ExceptionController {
         String message = details.isEmpty()
                 ? "Validation failed"
                 : details.getFirst().getMessage();
-        // логируем BAD_REQUEST с валидацией
+
         String params = ex.getBindingResult().getTarget() == null
                 ? ""
                 : ex.getBindingResult().getTarget().toString();
@@ -64,6 +65,20 @@ public class ExceptionController {
                 fieldError.getField(),
                 fieldError.getDefaultMessage()
         );
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    protected ResponseEntity<ResponseErrorDto> handleNotFoundException(NotFoundException ex) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(new ResponseErrorDto("NOT_FOUND", ex.getMessage()));
+    }
+
+    @ExceptionHandler(AuthorizeException.class)
+    protected ResponseEntity<ResponseErrorDto> handleAuthorizeException(AuthorizeException ex) {
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(new ResponseErrorDto("UNAUTHORIZED", ex.getMessage()));
     }
 }
 

@@ -3,5 +3,5 @@ package by.ino.caranalogapi.exception;
 import lombok.experimental.StandardException;
 
 @StandardException
-public class ServiceException extends RuntimeException {
+public class AuthorizeException extends RuntimeException{
 }
